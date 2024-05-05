@@ -69,9 +69,9 @@ def main():
     
     print( console_art )
     
-    difficulty, life_count = choose_difficulty()
-    correct_number = pick_random_number() 
-    player_win = False
+    correct_number = pick_random_number()     
+
+    life_count = choose_difficulty()
     
     game_play( life_count, correct_number )
 
@@ -97,17 +97,17 @@ def choose_difficulty():
         if difficulty == 'easy':
             print( 'You have 10 lifes! Guess the number: ' )
             life_count = 10
-            return difficulty, life_count
+            return life_count
         
         elif difficulty == 'medium':
             print( 'You have 7 lifes! Guess the number: ' )
             life_count = 7
-            return difficulty, life_count
+            return life_count
         
         elif difficulty == 'hard':
             print( 'You have 5 lifes! Guess the number: ' )
             life_count = 5
-            return difficulty, life_count
+            return life_count
         
         print( 'invalid entry' ) # restart loop if the input is not as expected
     
