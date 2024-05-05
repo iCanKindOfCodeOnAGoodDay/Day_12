@@ -55,6 +55,7 @@ o8o        `8   `V88V"V8P' o888o o888o o888o  `Y8bod8P' `Y8bod8P' d888b
 """
 
 def main():
+    
     """
     
     Description -   Runs our number guessing game, recursive call to main to restart game
@@ -65,31 +66,18 @@ def main():
     -------
 
     """
-    print(console_art)
+    
+    print( console_art )
     
     difficulty, life_count = choose_difficulty()
     correct_number = pick_random_number() 
     player_win = False
     
-    while life_count > 0: 
+    game_play( life_count, correct_number )
 
-        guess = guess_the_number( correct_number )       
-        if guess == correct_number:
-            player_win = True
-            
-            break # stop guessing and restart game below with the recursive call to main
-        life_count -= 1
-        print(f'you have {life_count} lives left')
-    
-    # No more guesses, game is over either way 
-    if player_win == False:      
-        print(f'Game Over! The correct number was {correct_number}') 
-    else:
-        print('Player win!')
-
-    main() # recursive call to main to start the game over
+    main() # recursive call to main to start the game over, due to input functions this is okay.
         
-    
+
 def choose_difficulty():
     
     """
@@ -104,24 +92,24 @@ def choose_difficulty():
     """
     
     while True:
-        difficulty = input('Choose Difficulty, Type: easy, medium, hard: ')
+        difficulty = input( 'Choose Difficulty, Type: easy, medium, hard: ' )
         
         if difficulty == 'easy':
-            print('You have 10 lifes! Guess the number: ')
+            print( 'You have 10 lifes! Guess the number: ' )
             life_count = 10
             return difficulty, life_count
         
         elif difficulty == 'medium':
-            print('You have 7 lifes! Guess the number: ')
+            print( 'You have 7 lifes! Guess the number: ' )
             life_count = 7
             return difficulty, life_count
         
         elif difficulty == 'hard':
-            print('You have 5 lifes! Guess the number: ')
+            print( 'You have 5 lifes! Guess the number: ' )
             life_count = 5
             return difficulty, life_count
         
-        print('invalid entry') # restart loop if the input is not as expected
+        print( 'invalid entry' ) # restart loop if the input is not as expected
     
     
 def pick_random_number():
@@ -137,11 +125,12 @@ def pick_random_number():
 
     """
     
-    random_number = random.randint(1, 100) # import random package
+    random_number = random.randint( 1, 100 ) # import random package
     
     return random_number
 
-def guess_the_number( the_correct_number ): 
+
+def guess_check( the_correct_number ): 
     
     """
     
@@ -157,21 +146,56 @@ def guess_the_number( the_correct_number ):
     stop_asking = False # if user does not input int, don't except the input instead ask again
     while stop_asking == False:
         try:
-            user_guess = int(input('guess the number'))
-            if type(user_guess) == int:
+            user_guess = int( input( 'guess the number' ) )
+            if type( user_guess ) == int:
                 stop_asking = True
         except:
-            print('please type an integer.')
+            print( 'please type an integer.' )
     
     if user_guess == the_correct_number:
-        print(f'winner, you guessed the correct number {the_correct_number}')
+        print( f'winner, you guessed the correct number {the_correct_number}' )
+        
     elif user_guess > the_correct_number:
-        print('too high')
+        print( 'too high' )
+        
     else:
-        print('too low')
+        print( 'too low' )
     
     return user_guess
 
+
+def game_play( life_count, correct_number ):
+        
+    """
+    
+    Description -   Asks for a guess until the user wins or runs out of guesses (loses)
+    ----------
+    Input -         life count based on difficulty selected, and the answer
+    ----------
+    Output -        After guess loop, outputs text in console to notify player if they won or lost
+    -------
+
+    """
+    
+    player_win = False
+    
+    while life_count > 0: 
+
+        guess = guess_check( correct_number )       
+        if guess == correct_number:
+            player_win = True
+            
+            break # stop guessing and restart game below with the recursive call to main ( in main )
+        life_count -= 1
+        print( f'you have {life_count} lives left' )
+        
+    # No more guesses, game is over either way 
+    if player_win == False:      
+        print( f'Game Over! The correct number was {correct_number}' ) 
+    else:
+        print( 'Player win!' )
+    
+    
 # run
 if __name__ == '__main__':
     main()
